@@ -5,68 +5,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atharva Khedekar | Portfolio</title>
     <meta name="description" content="Portfolio homepage showcasing projects, skills, and contact information.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <canvas class="background-canvas" aria-hidden="true"></canvas>
     <header>
         <nav class="navbar">
             <div class="container nav-inner">
-                <a href="#home" class="logo">Atharva<span>Khedekar</span></a>
+                <a href="#home" class="logo"><span class="logo-mark" aria-hidden="true">&gt;_</span><span class="logo-name">Atharva <b>Khedekar</b><small>AI &amp; DATA SCIENCE</small></span></a>
+
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Projects</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
 
                 <div class="nav-actions">
-                    <button class="theme-toggle" aria-label="Toggle dark mode">
-                        <span class="theme-icon">🌙</span>
-                    </button>
-
-                    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+                    <a class="nav-cta" href="#contact">Let's Connect <span aria-hidden="true">↗</span></a>
+                    <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-links">
                         <span></span>
                         <span></span>
                         <span></span>
                     </button>
                 </div>
-
-                <ul class="nav-links" id="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#projects">My Projects</a></li>
-                    <li><a href="#skills">Skills</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
             </div>
         </nav>
     </header>
 
-    <aside class="social-sidebar" aria-label="Social media links">
-        <a class="social-link" href="mailto:khedekaratharva2008@gmail.com" aria-label="Email">
-            <span class="social-icon" aria-hidden="true">📧</span>
-            <span class="social-text">Email</span>
-        </a>
-        <a class="social-link" href="https://www.linkedin.com/in/atharva-khedekar-3002ba21b/" target="_blank" rel="noreferrer" aria-label="LinkedIn">
-            <span class="social-icon" aria-hidden="true">🔗</span>
-            <span class="social-text">LinkedIn</span>
-        </a>
-        <a class="social-link" href="https://medium.com/@khedekaratharva2008" target="_blank" rel="noreferrer" aria-label="Medium">
-            <span class="social-icon" aria-hidden="true">✍️</span>
-            <span class="social-text">Medium</span>
-        </a>
-    </aside>
-
     <main>
         <section id="home" class="hero">
             <div class="container hero-content">
-                <p class="eyebrow"></p>
-                <h2>AI-DS Engineering student</h2>
-                <p class="hero-text">AI Journey 🚀<br>
-🤖 Aspiring: <b>AI Engineer | 🎓 B.E. AI & Data Science</b><br>
-💻 Passionate about: <b>AI, ML, GenAI & Software Development<br>
-🧠 Building skills in <b>Programming • Maths • Data Science • AI</b><br>
-🛠️ Learning by <b>building projects & experimenting</b><br>
-✍️ Technical Writing<b> • 🔍 Self-Learning • 💡 Problem Solving</b><br>
-🌍 Dream:<b> Build intelligent tech that solves real-world problems!✨</b><br>
-</p>
+                <p class="eyebrow"><span></span> Aspiring AI Engineer · Mumbai, India</p>
+                <h1>Hi, I'm <span>Atharva Khedekar</span></h1>
+                <p class="hero-role"><span aria-hidden="true">✳</span> AI &amp; Data Science Engineering Student</p>
+                <p class="hero-text">An engineering student drawn to the ideas behind intelligent technology, and the craft of turning them into useful software.</p>
+                <p class="hero-detail">I’m building a strong foundation in <strong>AI, machine learning, data science, and software development</strong> through hands-on projects, experimentation, and technical writing.</p>
+                <div class="hero-skills" aria-label="Areas of interest">
+                    <span>AI &amp; Machine Learning</span>
+                    <span>Data Science</span>
+                    <span>Generative AI</span>
+                    <span>Python</span>
+                    <span>Web Development</span>
+                </div>
                 <div class="hero-actions">
-                    <a class="btn btn-primary" href="#projects">View Projects</a>
-                    <a class="btn btn-secondary" href="#contact">Contact Me</a>
+                    <a class="btn btn-primary" href="#projects">Explore Projects <span aria-hidden="true">→</span></a>
+                    <a class="btn btn-secondary" href="#contact">Get in Touch</a>
+                </div>
+                <div class="hero-socials" aria-label="Social links">
+                    <a href="https://www.linkedin.com/in/atharva-khedekar-3002ba21b/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
+                    <a href="https://medium.com/@khedekaratharva2008" target="_blank" rel="noreferrer">Medium <span aria-hidden="true">↗</span></a>
+                    <a href="mailto:khedekaratharva2008@gmail.com">Email <span aria-hidden="true">↗</span></a>
                 </div>
             </div>
         </section>

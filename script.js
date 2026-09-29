@@ -1,13 +1,5 @@
 const navToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
-const themeToggle = document.querySelector('.theme-toggle');
-const themeIcon = document.querySelector('.theme-icon');
-
-const savedTheme = localStorage.getItem('portfolio-theme');
-if (savedTheme === 'dark') {
-    document.body.classList.add('dark-mode');
-    if (themeIcon) themeIcon.textContent = '☀️';
-}
 
 navToggle?.addEventListener('click', () => {
     const isOpen = navLinks.classList.toggle('active');
@@ -60,14 +52,6 @@ document.querySelectorAll('main section[id]').forEach((section) => {
     sectionObserver.observe(section);
 });
 
-themeToggle?.addEventListener('click', () => {
-    const isDark = document.body.classList.toggle('dark-mode');
-    localStorage.setItem('portfolio-theme', isDark ? 'dark' : 'light');
-    if (themeIcon) {
-        themeIcon.textContent = isDark ? '☀️' : '🌙';
-    }
-});
-
 const cardObserver = new IntersectionObserver(
     (entries) => {
         entries.forEach((entry) => {
@@ -105,3 +89,87 @@ document.querySelector('.contact-form')?.addEventListener('submit', (event) => {
     alert('Thanks for reaching out! Your message has been captured.');
     event.target.reset();
 });
+
+const canvas = document.querySelector('.background-canvas');
+const context = canvas?.getContext('2d');
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+if (canvas && context) {
+    let particles = [];
+    let animationFrame;
+    let isVisible = true;
+
+    const resizeCanvas = () => {
+        window.cancelAnimationFrame(animationFrame);
+        const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(window.innerWidth * pixelRatio);
+        canvas.height = Math.floor(window.innerHeight * pixelRatio);
+        canvas.style.width = `${window.innerWidth}px`;
+        canvas.style.height = `${window.innerHeight}px`;
+        context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+        const count = Math.min(100, Math.max(36, Math.floor((window.innerWidth * window.innerHeight) / 16000)));
+        particles = Array.from({ length: count }, () => ({
+            x: Math.random() * window.innerWidth,
+            y: Math.random() * window.innerHeight,
+            vx: (Math.random() - 0.5) * 0.32,
+            vy: (Math.random() - 0.5) * 0.32,
+            radius: Math.random() * 1.4 + 1,
+            hue: Math.random() > 0.5 ? 188 : 242
+        }));
+
+        drawFrame();
+    };
+
+    const drawFrame = () => {
+        context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+        particles.forEach((particle, index) => {
+            if (!reducedMotion.matches) {
+                particle.x += particle.vx;
+                particle.y += particle.vy;
+                if (particle.x < 0 || particle.x > window.innerWidth) particle.vx *= -1;
+                if (particle.y < 0 || particle.y > window.innerHeight) particle.vy *= -1;
+            }
+
+            for (let neighborIndex = index + 1; neighborIndex < particles.length; neighborIndex += 1) {
+                const neighbor = particles[neighborIndex];
+                const distance = Math.hypot(particle.x - neighbor.x, particle.y - neighbor.y);
+                if (distance < 145) {
+                    context.beginPath();
+                    context.moveTo(particle.x, particle.y);
+                    context.lineTo(neighbor.x, neighbor.y);
+                    context.strokeStyle = `hsla(${particle.hue}, 85%, 62%, ${(1 - distance / 145) * 0.16})`;
+                    context.lineWidth = 1;
+                    context.stroke();
+                }
+            }
+
+            context.beginPath();
+            context.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
+            context.fillStyle = `hsla(${particle.hue}, 90%, 62%, 0.72)`;
+            context.shadowBlur = 12;
+            context.shadowColor = `hsla(${particle.hue}, 95%, 62%, 0.7)`;
+            context.fill();
+            context.shadowBlur = 0;
+        });
+
+        if (!reducedMotion.matches && isVisible) {
+            animationFrame = window.requestAnimationFrame(drawFrame);
+        }
+    };
+
+    const stopAnimation = () => window.cancelAnimationFrame(animationFrame);
+
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+    document.addEventListener('visibilitychange', () => {
+        isVisible = !document.hidden;
+        if (isVisible && !reducedMotion.matches) drawFrame();
+        else stopAnimation();
+    });
+    reducedMotion.addEventListener('change', () => {
+        stopAnimation();
+        drawFrame();
+    });
+    resizeCanvas();
+}
